@@ -53,7 +53,7 @@ namespace Client.Controllers
             /* return Json(token);*/
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet]
         public IActionResult Logout()
         {

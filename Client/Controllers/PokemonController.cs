@@ -1,7 +1,6 @@
 ﻿using Client.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,36 +10,12 @@ using System.Threading.Tasks;
 namespace Client.Controllers
 {
     [Authorize]
-    public class HomeController : Controller
+    public class PokemonController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
-
         public IActionResult Index()
         {
             return View();
         }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        public IActionResult TableEmployees()
-        {
-            return View();
-        }
-
-        //[HttpGet("Notfound/")]
-        public IActionResult HTTP404()
-        {
-            return View();
-        }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

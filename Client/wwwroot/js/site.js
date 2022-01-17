@@ -113,7 +113,7 @@ chartSalary();
 //}
 
 
-//MATERI AJAX
+/*MATERI AJAX*/
 //$.ajax({
 //    url: "https://pokeapi.co/api/v2/pokemon/"
 //}).done((result) => {
@@ -130,44 +130,17 @@ chartSalary();
 //    });
 //    console.log(text);
 //    $(".tabelPoke").html(text);
-//    /* $(".pokeModal").html(url);*/
+//     $(".pokeModal").html(url);
 
 //}).fail((error) => {
 //    console.log(error);
 //});
 
-//$(document).ready(function () {
-//    $('#tablePoke').DataTable({
-//        'ajax': {
-//            'url': "https://pokeapi.co/api/v2/pokemon",
-//            'dataType': 'json',
-//            'dataSrc':'results'
-//        },
-//        'columns': [
-//            {
-//                'data' : 'name'
-//            },
-//            {
-//                'data': 'url'
-//            },
-//            {
-//                'data': null,
-//                'render': function (data, type, row) {
-//                    return `<button type="button" value="${row['url']}" onclick="getData2(this.value)" class="btn btn-primary" data-toggle="modal" data-target="#getPoke">Detail</button>`; 
-//                }
-//            }
-//        ]
-//    });
-//});
 
-//$(document).ready(function () {
-//    $('#TableEmployee').DataTable({
-//        dom: 'Bfrtip',
-//        buttons: [
-//            'copy', 'csv', 'excel', 'pdf', 'print'
-//        ]
-//    });
-//});
+
+
+
+
 
 
 /*======================================LOGIN==========================================*/
@@ -199,7 +172,17 @@ chartSalary();
 //}
 
 /*================================Show Data Table================================*/
-var table = "";
+
+//$(document).ready(function () {
+//    $('#TableEmployee').DataTable({
+//        dom: 'Bfrtip',
+//        buttons: [
+//            'copy', 'csv', 'excel', 'pdf', 'print'
+//        ]
+//    });
+//});
+/*var table = "";*/
+
 $(document).ready(function () {
     table = $('#TableEmployee').DataTable({
         responsive: true,
@@ -787,25 +770,117 @@ function chartGender() {
     })
 }
 
-/*==========================POKEMON============================*/
+/*//==========================POKEMON============================*/
+$.ajax({
+    url: "https://pokeapi.co/api/v2/pokemon?offset=20&limit=20"
+}).done((result) => {
+    console.log(result);
+    console.log(result.results);
+    var text = "";
+    $.each(result.results, function (key, val) {
+        text += `<tr>
+                <td>${val.name}</td>
+                <td class="text-capitalize">${val.url}</td>
+                <td><button type="button" value= "${val.url}"
+                        onclick="getData(this.value)" class="btn btn-primary" data-toggle="modal" data-target="#getPoke">Detail</td>
+                </tr>`;
+    });
+    $(".tablePoke").html(text);
+}).fail((error) => {
+    console.log(error);
+});
 
-//function getDetails(link){
+
+
+function getData(link) {
+    $.ajax({
+        url: link
+    }).done((result) => {
+        console.log(result);
+        var ability = "";
+        $.each(result.abilities, function (key, val) {
+            ability += /*`${val.ability.name}&nbsp|&nbsp`*/ `<span class="ability badge-pill badge-light text-capitalize" style="text-align">${val.ability.name}</span> &nbsp`;
+        });
+        var typePoke = "";
+        $.each(result.types, function (key, val) {
+            typePoke += typePokeColor(val.type.name) + "&nbsp";
+        });
+
+        function typePokeColor(val) {
+            if (val == "grass") {
+                var color = `<span class="badge badge-success text-capitalize" style="text-align: center;">${val}</span>`;
+                return color;
+            }
+            else if (val == "water") {
+                var color = `<span class="badge badge-primary text-capitalize" style="text-align: center;">${val}</span>`;
+                return color;
+            }
+            else if (val == "poison") {
+                var color = `<span class="badge badge-dark text-capitalize" style="text-align: center;">${val}</span>`;
+                return color;
+            }
+            else if (val == "normal") {
+                var color = `<span class="badge badge-light text-capitalize" style="text-align: center;">${val}</span>`;
+                return color;
+            }
+            else if (val == "fire") {
+                var color = `<span class="badge badge-danger text-capitalize" style="text-align: center;">${val}</span>`;
+                return color;
+            }
+            else if (val == "electric") {
+                var color = `<span class="badge badge-warning text-capitalize" style="text-align: center;">${val}</span>`;
+                return color;
+            }
+            else {
+                var color = `<span class="badge badge-secondary text-capitalize" style="text-align: center;">${val}</span>`;
+                return color;
+            }
+        }
+        var statPoke = "";
+        $.each(result.stats, function (key, val) {
+            statPoke += `<div class="row">
+                         <div class="text-capitalize" id="base" ><b>${val.stat.name}</b></div>
+                         </div>
+                            <div class="row progress">
+                          <div class="progress-bar" role="progressbar" style="width: ${val.base_stat + "%"};" aria-valuenow="${val.base_stat}" aria-valuemin="0" aria-valuemax="1000">${val.base_stat}</div>
+                           </div>`;
+        });
+        var img = ""
+        img += `
+            <img src="${result.sprites.other.dream_world.front_default}" alt="" width="250" height="250" style="background-color:gainsboro;" class="rounded-circle shadow p-0 mb-5 rounded"/></div>`;
+
+        $(".detailName").html(result.name);
+        $(".ability").html(":" + ability);
+        $(".height").html(": " + result.height);
+        $(".weight").html(": " + result.weight);
+        $("#stat").html(statPoke);
+        $(".badge").html(typePoke);
+
+
+        $("#detailImage").html(img);
+
+    }).fail((error) => {
+        console.log(error);
+    });
+}
+
+//function getDetails(link) {
 //    $.ajax({
 //        url: link
 //    }).done((result) => {
-//        //console.log(result);
-//        //console.log(result.abilities);
-//        //var ability = "";
-       
-//        //$each(result.abilities, function (key, val) {
-//        //    ability += `${val.ability.name}/`
-//        //});
-//        //var type = "";
-//        //$each(result.types, function (key, val) {
-//        //    type += `${val.type.name}/`
+//        console.log(result);
+//        console.log(result.abilities);
+//        var ability = "";
 
-            
-//        //});
+//        $each(result.abilities, function (key, val) {
+//            ability += `${val.ability.name}/`
+//        });
+//        var type = "";
+//        $each(result.types, function (key, val) {
+//            type += `${val.type.name}/`
+
+
+//        });
 //        var detailAbilities = "";
 //        if (result.abilities.length > 1) {
 //            $.each(result.abilities, function (key, val) {
@@ -820,128 +895,26 @@ function chartGender() {
 //        var img = ""
 //        img += ` <img src="${result.sprites.other.dream_world.front_default}" alt="" width="250" height="250" style="background-color:gainsboro;" class="rounded-circle shadow p-0 mb-5 rounded"/></div>`;
 //        $("#detailImage").html(img);
-               
+
 //        /*var img=""*/
 
-        
+
 //        $(".detailName").html(result.name);
 //        $(".detailAbilities").html(detailAbilities);
 //        $(".detailHeight").html(result.height);
 //        $(".detailWeight").html(result.weight);
 //        $(".detailWeight").html(result.weight);
-//      /*  var url = "";*/
-//    }).fail((error) => {
-//        console.log(error);
-//    });
-
-
-//function getData(link) {
-//    $.ajax({
-//        url: link
-//    }).done((result) => {
-//        text = "";
-//        srcAbility = "";
-//        $.each(result.abilities, function (key, val) {
-//            srcAbility += `${val.ability.name + "&nbsp"},`;
-//        });
-//        srcHeld = " ";
-//        $.each(result.types, function (key, val) {
-//            srcHeld += `<span class="badge badge-secondary">${val.type.name}</span> &nbsp`;
-//        });
-//        text += `<div class="container">
-//            <div class="text-center">
-//            <img src="${result.sprites.other.dream_world.front_default}" alt="" /></div>
-//            <div class="row">
-//                <div class="col">${srcHeld}</div>
-//            </div>
-//            <div class="row">
-//                <div class="col">Name </div>
-//                <div class="col">: ${result.name}</div>
-//           </div>
-//            <div class="row">
-//                <div class="col">Ability</div>
-//                <div class="col">: ${srcAbility}</div>
-//            </div>
-//            <div class="row">
-//               <div class="col">Weight</div>
-//                <div class="col">: ${result.weight} Kg</div>
-//            </div>
-//            <div class="row">
-//                <div class="col">Height</div>
-//                <div class="col">: ${result.height} Cm</div>
-//            </div></div>`;
-
-//        $(".modal-body").html(text);
+//        /*  var url = "";*/
 //    }).fail((error) => {
 //        console.log(error);
 //    });
 //}
-//    function getData2(link) {
-//        $.ajax({
-//            url: link
-//        }).done((result) => {
-//            console.log(result);
-//            var ability = "";
-//            $.each(result.abilities, function (key, val) {
-//                ability += /*`${val.ability.name}&nbsp|&nbsp`*/ `<span class="ability badge-pill badge-light" style="text-align">${val.ability.name}</span> &nbsp`;
-//            });
-//            var typePoke = "";
-//            $.each(result.types, function (key, val) {
-//                typePoke += typePokeColor(val.type.name) + "&nbsp";
-//            });
-
-//            function typePokeColor(val) {
-//                if (val == "grass") {
-//                    var color = `<span class="badge badge-success" style="text-align: center;">${val}</span>`;
-//                    return color;
-//                }
-//                else if (val == "water") {
-//                    var color = `<span class="badge badge-primary" style="text-align: center;">${val}</span>`;
-//                    return color;
-//                }
-//                else if (val == "poison") {
-//                    var color = `<span class="badge badge-dark" style="text-align: center;">${val}</span>`;
-//                    return color;
-//                }
-//                else if (val == "normal") {
-//                    var color = `<span class="badge badge-light" style="text-align: center;">${val}</span>`;
-//                    return color;
-//                }
-//                else if (val == "fire") {
-//                    var color = `<span class="badge badge-danger" style="text-align: center;">${val}</span>`;
-//                    return color;
-//                }
-//                else if (val == "electric") {
-//                    var color = `<span class="badge badge-warning" style="text-align: center;">${val}</span>`;
-//                    return color;
-//                }
-//                else {
-//                    var color = `<span class="badge badge-secondary" style="text-align: center;">${val}</span>`;
-//                    return color;
-//                }
-//            }
-//            var statPoke = "";
-//            $.each(result.stats, function (key, val) {
-//                statPoke += `<div class="row">
-//                         <div class="col" id="base" style="text-transform:uppercase"><b>${val.stat.name}</b></div>
-//                         <div class="baseStat col">: ${val.base_stat}</div></div>`;
-//            });
-//            var img = ""
-//            img += `
-//            <img src="${result.sprites.other.dream_world.front_default}" alt="" width="250" height="250" style="background-color:gainsboro;" class="rounded-circle shadow p-0 mb-5 rounded"/></div>`;
-
-//            $(".detailName").html(": " + result.name);
-//            $(".ability").html(":" + ability);
-//            $(".height").html(": " + result.height);
-//            $(".weight").html(": " + result.weight);
-//            $("#stat").html(statPoke);
-//            $(".badge").html(typePoke);
 
 
-//            $("#detailImage").html(img);
 
-//        }).fail((error) => {
-//            console.log(error);
-//        });
-//}
+
+  
+
+
+    
 

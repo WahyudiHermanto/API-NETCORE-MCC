@@ -13,6 +13,7 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -77,8 +78,22 @@ namespace Client
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseStatusCodePages(async context => 
+            {
+                var request = context.HttpContext.Request;
+                var response = context.HttpContext.Response;
 
+                if (response.StatusCode ==((int)HttpStatusCode.Unauthorized))
+                {
+                    response.Redirect("/unauthorized");
+                }
+                else if (response.StatusCode == ((int)HttpStatusCode.NotFound))
+                {
+                    response.Redirect("/Home/HTTP404");
+                }
+            });
             app.UseRouting();
+
             app.UseSession();
             app.Use(async (context, next) =>
             {
