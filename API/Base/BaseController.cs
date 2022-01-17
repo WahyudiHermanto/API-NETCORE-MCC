@@ -30,8 +30,8 @@ namespace API.Base
             //return Ok( result);
             if (hitung != 0)
             {
-                //employeeRepository.Get();
-                return Ok(new { status = HttpStatusCode.OK, result, massage = "successfully display data" });
+                return Ok(result);
+                
             }
             else
             {
@@ -43,42 +43,42 @@ namespace API.Base
         public ActionResult<Entity> Insert(Entity entity)
         {
             var insert = repository.Insert(entity);
-            return Ok(new { status = HttpStatusCode.OK, insert, massage = "successfully Insert data" });
+            return insert switch
+            {
+                0 => Ok(insert),
+                1 => BadRequest(new { status = HttpStatusCode.BadRequest, message = "Insert Failed, Email already exists!" }),
+                2 => BadRequest(new { status = HttpStatusCode.BadRequest, message = "Insert Failed, Phone already exists!" }),
+                _ => BadRequest(new { status = HttpStatusCode.BadRequest, message = "Insert Failed, NIK already exists!" }),
+            };
         }
 
-        [HttpDelete()]
+        [HttpDelete("{key}")]
         public ActionResult Delete(Key key)
         {
-            try
+            var data = repository.Get().Count();
+            var nik = repository.Delete(key);
+            if (data != 0)
             {
-                var result = repository.Get().Count();
-                if (result != 0)
+                if (nik != 1)
                 {
-                    repository.Delete(key);
-                    return Ok(new { status = HttpStatusCode.OK, result, message = "Successfully delete data" });
+                    return Ok(new { status = HttpStatusCode.OK, message = "Delete data successfull!" });
                 }
                 else
                 {
-                    return BadRequest(new { status = HttpStatusCode.BadRequest, result, message = "" });
+                    return BadRequest(new { status = HttpStatusCode.BadRequest, message = "Delete data not successfull!" });
                 }
+
             }
-            catch
+            else
             {
-                throw;
+                return BadRequest(new { status = HttpStatusCode.BadRequest, message = "Data is empty, can't delete data!!" });
             }
         }
         [HttpPut]
         public ActionResult Update(Entity entity)
         {
-            try
-            {
-                repository.Update(entity);
-                return Ok(new { status = HttpStatusCode.OK, message = "data successfully updated" });
-            }
-            catch
-            {
-                throw;
-            }
+            var edit = repository.Update(entity);
+            return Ok(edit);
 
         }
     

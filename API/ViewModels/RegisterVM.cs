@@ -21,7 +21,7 @@ namespace API.ViewModels
        // public int EducationId { get; set; }
         public string Degree { get; set; }
         public float GPA { get; set; }
-        public int RoleId { get; set; }
+        //public int RoleId { get; set; }
 
     }
 

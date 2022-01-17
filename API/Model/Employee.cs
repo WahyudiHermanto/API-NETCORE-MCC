@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
+
 namespace API.Model
 {
     [Table("Tb_m_employee")]
@@ -24,7 +25,7 @@ namespace API.Model
 
         public DateTime BirthDate { get; set; }
 
-        [Range(100000, 100000000, ErrorMessage = "Your salary out of range")]
+        [Range(100000, 1000000000, ErrorMessage = "Your salary out of range")]
         [Required(ErrorMessage = "{0} is a mandatory field")]
         public int Salary { get; set; }
 
@@ -33,6 +34,7 @@ namespace API.Model
         public string Email { get; set; }
        
         [JsonConverter(typeof(JsonStringEnumConverter))] 
+
         public Gender Gender { get; set; }
         [JsonIgnore]
         public virtual Account Account { get; set; }
@@ -40,8 +42,8 @@ namespace API.Model
 
     public enum Gender
     {
-        Male,
-        Female
+        Male =0,
+        Female =1 
     }
 
     

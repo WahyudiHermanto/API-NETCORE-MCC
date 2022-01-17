@@ -10,7 +10,6 @@ namespace API.Repository.Interface
     interface IEmployeeRepository
     {
         IEnumerable<Employee> Get(); //Untuk get all semua data
-     
         Employee Get(String NIK);
         int Insert(Employee employee);
         string Update(Employee employee);

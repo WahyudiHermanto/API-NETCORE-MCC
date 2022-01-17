@@ -1,0 +1,343 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "TABEL EMPLOYEE";
+    Layout = "_Layout";
+}
+
+<h1>TABLE EMPLOYEE</h1>
+
+
+
+
+@*=====================================REGISTER=======================================================*@
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#regisModal">+ Registration</button>
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="regisModal">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Registrasi Employee</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form class="needs-validation" novalidate>
+                    @*<div class="form-row">
+                            <div class="col-md mb-3">
+                                <label for="nik">NIK</label>
+                                <input type="text" class="form-control" id="nik" readonly required>
+                            </div>
+                        </div>*@
+                    <div class="form-row">
+                        <div class="col-md mb-3">
+                            <label for="firstName">First name</label>
+                            <input type="text" class="form-control" id="firstname" required>
+                            <div class="invalid-feedback">
+                                Please choose a First Name.
+                            </div>
+                        </div>
+
+                        <div class="col-md mb-3">
+                            <label for="lastName">Last name</label>
+                            <input type="text" class="form-control" id="lastname" required>
+                            <div class="invalid-feedback">
+                                Please choose a Last Name.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-md mb-3">
+                            <label for="gender">Gender</label>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" class="custom-control-input" id="gender" name="gender" value="0" required>
+                                <label class="custom-control-label" for="gender">Pria</label>
+                            </div>
+                            <div class="custom-control custom-radio mb-3">
+                                <input type="radio" class="custom-control-input" id="gender1" name="gender" value="1" required>
+                                <label class="custom-control-label" for="gender1">Wanita</label>
+                                <div class="invalid-feedback">Please choose gender.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md mb-3">
+                            <label for="birthDate">Birth Date</label>
+                            <input type="date" class="form-control" id="birthdate" required>
+                            <div class="invalid-feedback">
+                                Please choose Birth Date.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md mb-3">
+                            <label for="phoneNumber">Phone Number</label>
+                            <input type="number" class="form-control" id="phone" required>
+                            <div class="invalid-feedback">
+                                Please provide a Phone Number.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-md mb-3">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" required>
+                            <div class="invalid-feedback">
+                                Please input your Email.
+                            </div>
+                        </div>
+
+                        <div class="col-md mb-3">
+                            <label for="password">Password</label>
+                            <input type="password" @*pattern=".{8,}"*@ class="form-control" id="password" required>
+                            <div class="invalid-feedback">
+                                Please input your password minimal 8 character.
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-md mb-3">
+                            <label for="salary">Salary</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroupPrepend">Rp</span>
+                                </div>
+                                <input type="number" class="form-control" id="salary" aria-describedby="inputGroupPrepend" required>
+                                <div class="invalid-feedback">
+                                    Please input your salary.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md mb-3">
+                            <label for="gpa">GPA</label>
+                            <input type="number" step="0.01" class="form-control" id="gpa" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md mb-3">
+                            <label for="univ">University</label>
+                            <select class="custom-select" id="univ" required>
+                            </select>
+                            <div class="invalid-feedback">
+                                Please select a valid University.
+                            </div>
+                        </div>
+
+                        <div class="col-md mb-3">
+                            <label for="degree">Degree</label>
+                            <select class="custom-select" id="degree" required>
+                                <option selected disabled value="">Choose...</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Please select a valid Degree.
+                            </div>
+                        </div>
+
+                        @*<div class="form-row">
+                                <div class="col-md mb-3">
+                                    <label for="roleid">Role Id</label>
+                                    <input type="number" class="form-control" id="roleid" required>
+                                </div>
+                            </div>*@
+
+                    </div>
+                    <button class="btn btn-primary" type="submit" onclick="Insert()">Submit</button>
+
+                </form>
+
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+@*===================================================EDIT====================================================*@
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="editModal">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Registrasi Employee</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form class="needs-valid" novalidate>
+                    <div class="form-row">
+                        <div class="col-md mb-3">
+                            <label for="nikedit">NIK</label>
+                            <input type="text" class="form-control" id="nikedit" readonly required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md mb-3">
+                            <label for="firstNameedit">First name</label>
+                            <input type="text" class="form-control" id="firstnameedit" required>
+                            <div class="invalid-feedback">
+                                Please choose a First Name.
+                            </div>
+                        </div>
+
+                        <div class="col-md mb-3">
+                            <label for="lastNameedit">Last name</label>
+                            <input type="text" class="form-control" id="lastnameedit" required>
+                            <div class="invalid-feedback">
+                                Please choose a Last Name.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <label for="genderedit">Gender</label>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md mb-3">
+                            <div class="custom-control custom-radio">
+                                <div>
+                                    <input type="radio" class="custom-control-input" id="genderedit" name="genderedit" value="0" required>
+                                    <label class="custom-control-label" for="genderedit">Pria</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md mb-3">
+                            <div class="custom-control custom-radio">
+                                <div>
+                                    <input type="radio" class="custom-control-input" id="genderedit1" name="genderedit" value="1" required>
+                                    <label class="custom-control-label" for="genderedit1">Wanita</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md mb-3">
+                            <label for="birthDateedit">Birth Date</label>
+                            <input type="date" class="form-control" id="birthDateedit" required>
+                            <div class="invalid-feedback">
+                                Please choose Birth Date.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md mb-3">
+                            <label for="phoneNumberedit">Phone Number</label>
+                            <input type="text" class="form-control" id="phoneNumberedit" required>
+                            <div class="invalid-feedback">
+                                Please provide a Phone Number.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-md mb-3">
+                            <label for="emailedit">Email</label>
+                            <input type="email" class="form-control" id="emailedit" required>
+                            <div class="invalid-feedback">
+                                Please input your Email.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-md mb-3">
+                            <label for="salaryedit">Salary</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroupPrepend">Rp</span>
+                                </div>
+                                <input type="number" class="form-control" id="salaryedit" aria-describedby="inputGroupPrepend" required>
+                                <div class="invalid-feedback">
+                                    Please input your salary.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary edit" id="edit">Submit</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<table class="table table-hover" id="TableEmployee">
+    <thead class="thead-dark">
+        <tr>
+            <th>No</th>
+            <th>NIK</th>
+            <th>Fullname</th>
+            <th>Phone</th>
+            <th>Salary</th>
+            <th>Email</th>
+            <th>Birthdate</th>
+            <th>Gender</th>
+            <th>Degree</th>
+            <th>GPA</th>
+            <th>Name</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr>
+            <td>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+@*===========================CHART==============================================*@
+<div class="row mt-4">
+
+    <!-- Pie Chart -->
+    <div class="col-xl-6">
+        <div class="card shadow mb-4">
+            <!-- Card Header - Dropdown -->
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Gender</h6>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                <div id="chartGender"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-6">
+        <div class="card shadow mb-4">
+            <!-- Card Header - Dropdown -->
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">University</h6>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                <div id="chartUniversity"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mt-4">
+    <div class="col-xl-6">
+        <div class="card shadow mb-4">
+            <!-- Card Header - Dropdown -->
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Salary</h6>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                <div id="chartSalary"></div>
+            </div>
+        </div>
+    </div>
+</div>

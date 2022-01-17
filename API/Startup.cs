@@ -47,6 +47,7 @@ namespace API
             services.AddScoped<AccountRoleRepository>();
             services.AddDbContext<MyContext>(options => 
             options.UseSqlServer(Configuration.GetConnectionString("API")));
+           
             /*services.AddDbContext<DbContext>(options => options
            .UseLazyLoadingProxies()
            .UseSqlServer(Configuration.GetConnectionString("Exercise0Context")));*/
@@ -86,7 +87,7 @@ namespace API
 
             services.AddCors(c =>
             {
-                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
+                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             });
 
         }
@@ -118,7 +119,7 @@ namespace API
 
             //app.UseCors(options => options.WithOrigins("https://localhost:44332"));
 
-            app.UseCors(options => options.AllowAnyOrigin());
+            app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
             app.UseEndpoints(endpoints =>
             {

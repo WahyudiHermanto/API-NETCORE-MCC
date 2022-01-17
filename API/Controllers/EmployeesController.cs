@@ -1,32 +1,55 @@
 ﻿using API.Base;
 using API.Context;
 using API.Model;
+using API.Repository;
 using API.Repository.Data;
+//using API.ViewModel;
 using API.ViewModels;
+//using DurableTask.Core.Common;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Threading.Tasks;
 namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class EmployeesController : BaseController<Employee, EmployeeRepository, string>
     {
-        private readonly MyContext myContext;
+        //private readonly MyContext myContext;
         private readonly EmployeeRepository employeeRepository;
         public IConfiguration _configuration;
 
         public object NIK { get; private set; }
 
-        public EmployeesController(EmployeeRepository employeeRepository, MyContext myContext, IConfiguration configuration) : base(employeeRepository)
+        public EmployeesController(EmployeeRepository employeeRepository/*, MyContext myContext*/, IConfiguration configuration) : base(employeeRepository)
         {
             this.employeeRepository = employeeRepository;
-            this.myContext = myContext;
+            //this.myContext = myContext;
             this._configuration = configuration;
+        }
+
+        [HttpPost]
+        [Route("/Insert")]
+        public ActionResult Inserted(Employee employee)
+        {
+            var insert = employeeRepository.Inserted(employee);
+            return insert switch
+            {
+                0 => Ok(new { status = HttpStatusCode.OK, message = "Insert Data Successfull" }),
+                1 => BadRequest(new { status = HttpStatusCode.BadRequest, message = "Insert Failed, Email already exists!" }),
+                2 => BadRequest(new { status = HttpStatusCode.BadRequest, message = "Insert Failed, Phone already exists!" }),
+                _ => BadRequest(new { status = HttpStatusCode.BadRequest, message = "Insert Failed, NIK already exists!" }),
+            };
         }
 
         [HttpPut("{NIK}")]
@@ -72,7 +95,7 @@ else
 
         }
 
-        [HttpPost("/Register")]
+        [HttpPost("Register")]
         public ActionResult Register(RegisterVM registerVM)
         {
             var register = employeeRepository.Register(registerVM);
@@ -107,8 +130,9 @@ else
             return Ok("Test JWT berhasil");
         }
 
-        [Authorize(Roles = "Director,Manager")]
-        [HttpGet("/GetRegisteredData")]
+        [AllowAnonymous]
+        //[/*Authorize*/(Roles = "Director,Manager")]
+        [HttpGet("GetRegisteredData")]
         public ActionResult GetRegisteredData()
         {
             var getData = employeeRepository.GetRegisteredData();
@@ -124,27 +148,24 @@ else
 
         }
 
-
-
-        [HttpGet]
-        [Route("GetRegisteredData")]
-        public ActionResult RegisteredData()
-        {
-            var result = employeeRepository.GetRegisterDataEigerly();
-            try
-            {
-                var GetRegisteredData = employeeRepository.GetRegisteredData();
-                if (GetRegisteredData != null)
-                {
-                    return Ok(new { status = HttpStatusCode.OK, data = GetRegisteredData, message = "Data Found" });
-                }
-                return Ok(new { status = HttpStatusCode.BadRequest, message = "Data not found" });
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
+        //[HttpGet]
+        //[Route("GetRegisteredData")]
+        //public ActionResult RegisteredData()
+        //{
+        //    //var result = employeeRepository.GetRegisterDataEigerly();
+           
+        //        var GetRegisteredData = employeeRepository.GetRegisteredData();
+        //        if (GetRegisteredData != null)
+        //        {
+        //            return Ok(result);
+        //        }
+        //        else
+        //        {
+        //        return Ok(new { status = HttpStatusCode.BadRequest, message = "Data not found" });
+        //        }
+               
+                
+        //}
 
         [HttpGet("TestCors")]
         public ActionResult TesCORS()

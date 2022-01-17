@@ -1,0 +1,181 @@
+﻿@{
+    ViewData["Title"] = "HALAMAN UTAMA";
+    Layout = "_Layout";
+}
+
+
+@*<div class="test"></div>*@
+@*<h1 class ="judul">judul ni </h1>*@
+
+
+@*<div class="judul">JUDUL </div>
+    <div class="container">
+        <section id="a">
+            <p class="p1">Paragraf 1</p>
+            <a href="#">LINK INI</a>
+            <p class="p1    ">Paragraf 2</p>
+            <p class="p1">Paragraf 3</p>
+            <ul>
+                <li class="list">Testing 1</li>
+                <li class="list">Testing 1</li>
+            </ul>
+
+        </section>
+        <section id="b">
+            <span class="p2">Paragraf 2</span>
+            <p id="a">Paragraf 4</p>
+            <ul>
+                <partial class="p2">test paragraf</partial>
+                <li class="p2">Testing</li>
+            </ul>
+            <ul>
+                <li class="list">List 1</li>
+                <li class="list">List 2</li>
+                <li class="list">List 3</li>
+            </ul>
+
+
+        </section>
+
+    </div>*@
+<head>
+    <title>
+        Change color
+    </title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">
+    </script>
+    <style>
+        #backG {
+            width: 200px;
+            height: 50px;
+            color: white;
+            background: green;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!--<div class="row mt-lg-5">
+        <div class="col border border-primary">
+            Tincidunt integer eu augue augue nunc elit dolor, luctus placerat scelerisque euismod, iaculis eu lacus nunc mi elit, vehicula ut laoreet ac, aliquam sit amet justo nunc tempor, metus vel.
+            Tincidunt integer eu augue augue nunc elit dolor, luctus placerat scelerisque euismod, iaculis eu lacus nunc mi elit, vehicula ut laoreet ac, aliquam sit amet justo nunc tempor, metus vel.
+            Tincidunt integer eu augue augue nunc elit dolor, luctus placerat scelerisque euismod, iaculis eu lacus nunc mi elit, vehicula ut laoreet ac, aliquam sit amet justo nunc tempor, metus vel.
+        </div>
+        <div class="col">
+            <div class="row">
+                <div class="col mb-2 border border-primary">
+                    Tincidunt integer eu augue augue nunc elit dolor, luctus placerat scelerisque euismod, iaculis eu lacus nunc mi elit, vehicula ut laoreet ac, aliquam sit amet justo nunc tempor, metus vel.
+                </div>
+            </div>
+            <div id="row" class="row">
+                <div class="col mb-2 border border-primary">
+                    Tincidunt integer eu augue augue nunc elit dolor, luctus placerat scelerisque euismod, iaculis eu lacus nunc mi elit, vehicula ut laoreet ac, aliquam sit amet justo nunc tempor, metus vel.
+                </div>
+                <div class="col mb-2 border border-primary">
+                    Tincidunt integer eu augue augue nunc elit dolor, luctus placerat scelerisque euismod, iaculis eu lacus nunc mi elit, vehicula ut laoreet ac, aliquam sit amet justo nunc tempor, metus vel.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button onclick="GFG_Fun()">
+        click here to change color
+    </button>
+    <br>
+    <br>-->
+    @*<div id="backG">
+            Ut fusce varius nisl ac ipsum gravida vel pretium tellus tincidunt integer eu augue augue nunc elit dolor, luctus placerat.
+        </div>*@
+
+
+    <!--<h1>SCROLL KEBAWAH </h1>
+    <h1>SCROLL KEBAWAH </h1>
+    <h1>SCROLL KEBAWAH </h1>
+    <h1>SCROLL KEBAWAH </h1>
+    <h1>SCROLL KEBAWAH </h1>
+    <h1>SCROLL KEBAWAH </h1>
+    <h1>SCROLL KEBAWAH </h1>
+    <h1>SCROLL KEBAWAH </h1>
+    <h1>SCROLL KEBAWAH </h1>
+    <h1>SCROLL KEBAWAH </h1>
+    <h1>SCROLL KEBAWAH </h1>
+    <h1>SCROLL KEBAWAH </h1>
+    <h1>SCROLL KEBAWAH </h1>
+    <h1>SCROLL KEBAWAH </h1>
+    <h1>SCROLL KEBAWAH </h1>
+    <h1>SCROLL KEBAWAH </h1>
+    <h1>SCROLL KEBAWAH </h1>-->
+
+    <h1>LIST DATA</h1>
+    <table class="table table-hover" id="tablePoke" >
+        <thead class="thead-dark">
+            <tr>
+                <th>NIK</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+            </tr>
+        </thead>
+
+        <tbody class="tabelPoke">
+            <tr>
+                <td>1</td>
+                <td>Testing</td>
+                <td>
+                    <button class="btn btn-primary">Detail </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="modal fade" id="getPoke" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Pokemon Detail</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="detailModal">
+                    <div class="container">
+
+                        <div class="text-center" id="detailImage">
+                            <img src="" alt="" />
+                        </div>
+                        <div class="row">
+                            <span class="badge" style="font-size: 20px; margin: auto">pokemon</span>
+                        </div>
+                        <div class="text-center bg-secondary" style="color: white "><b>Detail</b></div>
+                        <div style="color: black ">
+                            <div class="row">
+                                <div class="col"><b>NAME</b></div>
+                                <div class="detailName col">Pokemon</div>
+                            </div>
+                            <div class="row">
+                                <div class="col"><b>ABILITY</b></div>
+                                <div class="ability col">Pokemon</div>
+                            </div>
+                            <div class="row">
+                                <div class="col"><b>WEIGHT</b></div>
+                                <div class="weight col">100</div>
+                            </div>
+                            <div class="row">
+                                <div class="col"><b>HEIGHT</b></div>
+                                <div class="height col">200</div>
+                            </div>
+                        </div>
+                        <div class="text-center bg-secondary" style="color: white "><b>Stat</b></div>
+                        <div style="color: black " id="stat">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

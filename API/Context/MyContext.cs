@@ -9,10 +9,17 @@ namespace API.Context
 {
     public class MyContext : DbContext //Entity Framework
     {
+
         public MyContext(DbContextOptions<MyContext> options) : base(options)
+
         {
 
         }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionBuilder)
+        //{
+        //    optionBuilder.UseLazyLoadingProxies();
+        //}
+
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Account> Account { get; set; }
         public DbSet<Education> Education { get; set; }

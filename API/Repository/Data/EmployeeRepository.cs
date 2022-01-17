@@ -110,11 +110,13 @@ namespace API.Repository.Data
                             NIK = nikIncrement,
                             Firstname = registerVM.Firstname,
                             Lastname = registerVM.Lastname,
-                            Email = registerVM.Email,
-                            Salary = registerVM.Salary,
                             Phone = registerVM.Phone,
+                            BirthDate = registerVM.Birthdate,
+                            Email = registerVM.Email,
                             Gender = (Model.Gender)registerVM.Gender,
-                            BirthDate = registerVM.Birthdate
+                            Salary = registerVM.Salary,
+                        
+                            
                         };
                         var account = new Account
                         {
